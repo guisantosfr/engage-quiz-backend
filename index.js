@@ -18,6 +18,8 @@ wss.on('connection', (ws) => {
     webSocketController.handleConnection(ws);
 });
 
-server.listen(5001, () => {
-    console.log('Servidor escutando na porta 5001');
+const port = process.env.PORT || 5000;
+
+server.listen(port, () => {
+    console.log('Servidor escutando na porta ' + port);
 });
