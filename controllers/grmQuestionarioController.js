@@ -20,21 +20,18 @@ async function cadastraQuestionario(request, response) {
     await connection(); 
     const session = await mongoose.startSession();
     try {
-      //adiciona comentarios as questões
-      var questionarioAux = apiGptController.getChatGPTResponse(questionario);
       session.startTransaction(); // Inicia a transação
       // 1. Criar e salvar o questionário
       const novoQuestionario = new QuestionarioModel({
         nome: questionario.nome,
-        descricao: questionarioAux.descricao,
-        codigo: questionarioAux.codigo || (await gerarCodigoQuestionario()),
-        explicacao : questionarioAux.explicacao
+        descricao: questionario.descricao,
+        codigo: questionario.codigo || (await gerarCodigoQuestionario()),
       });
       console.log(novoQuestionario);
       // Salva o questionário no banco de dados
       await novoQuestionario.save({ session });
       // 2. Salvar as questões associadas ao questionário
-      const questoes = questionarioAux.questoes.map(questaoData => ({
+      const questoes = questionario.questoes.map(questaoData => ({
         enunciado: questaoData.enunciado,
         resposta: normalizaResposta(questaoData.resposta),
         tema: questaoData.tema,
