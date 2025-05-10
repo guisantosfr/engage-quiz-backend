@@ -8,6 +8,11 @@ const auxController = require('./controllers/auxController')
 const questionarioController = require('./controllers/questionarioController')
 const grmQuestionarioController = require('./controllers/grmQuestionarioController')
 const webSocketController = require('./webSocketController')
+
+routes.get('/ping', (req, res) => {
+    res.status(200).send('pong');
+});
+
 //rota de retorno da turma
 //funcionando
 routes.get('/turma',turmaController.getTurma);

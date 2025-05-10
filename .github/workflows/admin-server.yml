@@ -1,0 +1,12 @@
+name: Make a render request every 14 minutes
+
+on:
+  schedule:
+    - cron: "*/14 * * * *"
+
+jobs:
+  render-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping
+        run: curl https://engage-quiz-backend.onrender.com/ping
